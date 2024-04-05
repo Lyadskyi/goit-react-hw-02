@@ -1,13 +1,20 @@
+import { useState } from "react";
+
 // Imports components
 import Description from "../Description/Description";
 import Options from "../Options/Options";
 import Feedback from "../Feedback/Feedback";
-import Notification from "../Notification/Notification";
+// import Notification from "../Notification/Notification";
 
 // Import module.css
 import css from "./App.module.css";
 
 export default function App() {
+  const [clicks, setClicks] = useState(0);
+
+  const handleClick = () => {
+    setClicks(5);
+  };
   return (
     <>
       <Description
@@ -16,19 +23,22 @@ export default function App() {
         options below."
       />
       <Options>
-        <button className={css.btn}>Good</button>
-        <button className={css.btn}>Neutral</button>
-        <button className={css.btn}>Bad</button>
-        <button className={css.btn}>Reset</button>
+        <button onClick={handleClick} className={css.btn}>
+          Good {clicks}
+        </button>
+        <button onClick={handleClick} className={css.btn}>
+          Neutral
+        </button>
+        <button onClick={handleClick} className={css.btn}>
+          Bad
+        </button>
       </Options>
       <Feedback>
-        <p className={css.reviews}>Good:</p>
-        <p className={css.reviews}>Neutral:</p>
-        <p className={css.reviews}>Bad:</p>
-        <p className={css.reviews}>Total:</p>
-        <p className={css.reviews}>Positive:</p>
+        <p className={css.reviews}>Good: </p>
+        <p className={css.reviews}>Neutral: </p>
+        <p className={css.reviews}>Bad: </p>
       </Feedback>
-      <Notification noStatistics="No feedback yet" />
+      {/* <Notification noStatistics="No feedback yet" /> */}
     </>
   );
 }
