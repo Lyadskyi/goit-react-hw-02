@@ -1,9 +1,17 @@
-import css from "../Options/Options.module.css";
+import css from "./Options.module.css";
 
-export default function Options({ children }) {
+export default function Options({ onButton }) {
   return (
     <>
-      <div className={css.buttons}>{children}</div>
+      <button className={css.button} onClick={() => onButton("good")}>
+        Good
+      </button>
+      <button className={css.button} onClick={() => onButton("neutral")}>
+        Neutral
+      </button>
+      <button className={css.button} onClick={() => onButton("bad")}>
+        Bad
+      </button>
     </>
   );
 }
