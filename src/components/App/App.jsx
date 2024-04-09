@@ -21,7 +21,7 @@ export default function App() {
 
   useEffect(() => {
     localStorage.setItem("feedbacks", JSON.stringify(feedbackTypes));
-  });
+  }, [feedbackTypes]);
 
   const updateFeedback = (feedbackType) => {
     setFeedbackTypes({
@@ -41,6 +41,15 @@ export default function App() {
   const { good, neutral, bad } = feedbackTypes;
   const feedbackTotal = good + neutral + bad;
 
+  const percentageFeedback =
+    feedbackTypes > 0
+      ? Math.round(
+          (feedbackTypes.good /
+            (feedbackTypes.good + feedbackTypes.neutral + feedbackTypes.bad)) *
+            100
+        )
+      : 0;
+
   return (
     <>
       <Description
@@ -57,7 +66,11 @@ export default function App() {
       {feedbackTotal === 0 ? (
         <Notification noStatistics="No feedback yet" />
       ) : (
-        <Feedback feedback={feedbackTypes} total={feedbackTotal} />
+        <Feedback
+          feedback={feedbackTypes}
+          total={feedbackTotal}
+          percentage={percentageFeedback}
+        />
       )}
     </>
   );
