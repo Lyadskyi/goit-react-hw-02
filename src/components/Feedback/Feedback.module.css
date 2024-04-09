@@ -1,6 +1,15 @@
 .feedback {
   margin-top: 25px;
+  font-size: 25px;
   display: flex;
   flex-direction: column;
   gap: 7px;
+}
+
+.total {
+  color: #0079e3;
+}
+
+.positive {
+  color: #3de10c;
 }

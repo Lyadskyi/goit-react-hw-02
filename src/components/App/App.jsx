@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Imports components
 import Description from "../Description/Description";
@@ -6,23 +6,40 @@ import Options from "../Options/Options";
 import Feedback from "../Feedback/Feedback";
 import Notification from "../Notification/Notification";
 
-// Import module.css
-// import css from "./App.module.css";
-
 export default function App() {
-  const [feedTypes, setFeedbackTypes] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [feedbackTypes, setFeedbackTypes] = useState(() => {
+    const savedFeedbacks = localStorage.getItem("feedbacks");
+    if (savedFeedbacks !== null) {
+      return JSON.parse(savedFeedbacks);
+    }
+    return {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
   });
 
-  const updateFeedback = (feedbackTypes) => {
+  useEffect(() => {
+    localStorage.setItem("feedbacks", JSON.stringify(feedbackTypes));
+  });
+
+  const updateFeedback = (feedbackType) => {
     setFeedbackTypes({
-      ...feedTypes,
-      [feedbackTypes]: feedTypes[feedbackTypes] + 1,
+      ...feedbackTypes,
+      [feedbackType]: feedbackTypes[feedbackType] + 1,
     });
-    console.log(feedTypes);
   };
+
+  const feedbackReset = () => {
+    setFeedbackTypes({
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    });
+  };
+
+  const { good, neutral, bad } = feedbackTypes;
+  const feedbackTotal = good + neutral + bad;
 
   return (
     <>
@@ -31,9 +48,17 @@ export default function App() {
         description="Please leave your feedback about our service by selecting one of the
         options below."
       />
-      <Options onButton={updateFeedback} />
-      <Feedback />
-      <Notification noStatistics="No feedback yet" />
+      <Options
+        onButton={updateFeedback}
+        total={feedbackTotal}
+        reset={feedbackReset}
+      />
+
+      {feedbackTotal === 0 ? (
+        <Notification noStatistics="No feedback yet" />
+      ) : (
+        <Feedback feedback={feedbackTypes} total={feedbackTotal} />
+      )}
     </>
   );
 }

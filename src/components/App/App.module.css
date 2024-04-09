@@ -5,21 +5,3 @@
   text-align: center;
   color: blue;
 }
-
-.btn {
-  cursor: pointer;
-  padding: 6px 14px;
-  font-size: 20px;
-  border-radius: 5px;
-  background-color: #abebc6;
-}
-
-.btn:hover {
-  /* border: orchid; */
-  background-color: aquamarine;
-  scale: 1.05;
-}
-
-.reviews {
-  font-size: 20px;
-}
