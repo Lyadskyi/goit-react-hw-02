@@ -42,7 +42,7 @@ export default function App() {
   const feedbackTotal = good + neutral + bad;
 
   const percentageFeedback =
-    feedbackTypes > 0
+    feedbackTotal > 0
       ? Math.round(
           (feedbackTypes.good /
             (feedbackTypes.good + feedbackTypes.neutral + feedbackTypes.bad)) *
